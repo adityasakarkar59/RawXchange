@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rawXchange - Seller Registration Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            padding: 32px 16px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .stage-progress {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            
+        }
+
+        .stage {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .stage.completed {
+            color: #d89822;
+        }
+
+        .stage.active {
+            color: #d89822;
+        }
+
+        .stage.inactive {
+            color: #9ca3af;
+        }
+
+        .stage-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 14px;
+        }
+
+        .stage-circle.completed {
+            background-color: #16a34a;
+        }
+
+        .stage-circle.active {
+            background-color: #587fa7;
+        }
+
+        .stage-circle.inactive {
+            background-color: #d1d5db;
+        }
+
+        .stage-name {
+            font-weight: 600;
+            font-size: 16px;
+            
+        }
+
+        .stage-line {
+            flex: 1;
+            height: 4px;
+            background-color: #d1d5db;
+            margin: 0 12px;
+        }
+
+        .form-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 32px;
+            width: 700px;
+            margin: 0 auto;
+            margin-left: -50px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: black;
+            margin-bottom: 8px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 12px;
+            border: 1px solid #776e6e;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: all 0.2s;
+            
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            
+            border-color: black;
+            box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.1);
+        }
+
+        .form-input.error,
+        .form-select.error,
+        .form-textarea.error {
+            border-color: #dc2626;
+        }
+
+        .error-text {
+            color: #dc2626;
+            font-size: 12px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-text.show {
+            display: block;
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 16px;
+            padding-top: 32px;
+            border-top: 2px solid #e5e7eb;
+            margin-top: 24px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background-color: #0066cc;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0052a3;
+        }
+
+        .success-message {
+            background-color: #dbeafe;
+            border: 2px solid #10b981;
+            color: #047857;
+            padding: 16px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: 600;
+            margin-top: 16px;
+            display: none;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Seller Registration Form</h1>
+            
+            <div class="stage-progress">
+                <div class="stage active" id="stage-0">
+                    <div class="stage-circle active">1</div>
+                    <div class="stage-name">Documentation</div>
+                </div>
+                
+                <div class="stage-line"></div>
+                
+                <div class="stage inactive" id="stage-1">
+                    <div class="stage-circle inactive">2</div>
+                    <div class="stage-name">Business Profile</div>
+                </div>
+                
+                <div class="stage-line"></div>
+                
+                <div class="stage inactive" id="stage-2">
+                    <div class="stage-circle inactive">3</div>
+                    <div class="stage-name">Product Standards</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <!-- Stage 0: Documentation -->
+            <div id="form-0" class="form-content">
+                <h2 class="form-title">Documentation</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Business Registration Number</label>
+                        <input type="text" class="form-input" name="businessRegistrationNumber" placeholder="Enter registration number">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">GST Number</label>
+                        <input type="text" class="form-input" name="gstNumber" placeholder="Enter GST number">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Bank Account Details</label>
+                        <input type="text" class="form-input" name="bankAccountDetails" placeholder="Enter bank details">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">PAN/Tax ID</label>
+                        <input type="text" class="form-input" name="panTaxId" placeholder="Enter PAN or Tax ID">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group full">
+                        <label class="form-label">Business Address</label>
+                        <textarea class="form-textarea" name="businessAddress" placeholder="Enter complete business address"></textarea>
+                        <span class="error-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 1: Business Profile -->
+            <div id="form-1" class="form-content hidden">
+                <h2 class="form-title">Business Profile</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Registered Business Name</label>
+                        <input type="text" class="form-input" name="businessName" placeholder="Enter business name">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Business Entity Type</label>
+                        <select class="form-select" name="entityType">
+                            <option value="">Select entity type</option>
+                            <option value="sole">Sole Proprietor</option>
+                            <option value="partnership">Partnership</option>
+                            <option value="pvt-ltd">Private Limited</option>
+                            <option value="public-ltd">Public Limited</option>
+                            <option value="llp">LLP</option>
+                        </select>
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Business Registration Date</label>
+                        <input type="date" class="form-input" name="registrationDate">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Business Email ID</label>
+                        <input type="email" class="form-input" name="businessEmail" placeholder="Enter business email">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Business Phone</label>
+                        <input type="tel" class="form-input" name="businessPhone" placeholder="Enter phone number">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Product Expertise</label>
+                        <input type="text" class="form-input" name="productExpertise" placeholder="Describe your expertise">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group full">
+                        <label class="form-label">Bulk Supply Capability</label>
+                        <textarea class="form-textarea" name="bulkSupplyCapability" placeholder="Describe your bulk supply capabilities"></textarea>
+                        <span class="error-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stage 2: Product Standards -->
+            <div id="form-2" class="form-content hidden">
+                <h2 class="form-title">Product Standards</h2>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label class="form-label">Quality Certifications</label>
+                        <input type="text" class="form-input" name="qualityCertifications" placeholder="Enter certifications">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Compliance Documentation</label>
+                        <input type="text" class="form-input" name="complianceDocumentation" placeholder="Enter compliance details">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group full">
+                        <label class="form-label">Product Specifications</label>
+                        <textarea class="form-textarea" name="productSpecifications" placeholder="Describe product specifications"></textarea>
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Minimum Batch Size</label>
+                        <input type="text" class="form-input" name="minimumBatchSize" placeholder="Enter minimum batch size">
+                        <span class="error-text"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Delivery Capabilities</label>
+                        <input type="text" class="form-input" name="deliveryCapabilities" placeholder="Describe delivery options">
+                        <span class="error-text"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" id="continueBtn">
+                    Continue <span>→</span>
+                </button>
+            </div>
+
+            <div class="success-message" id="successMessage">
+                ✓ Form submitted successfully! We'll review your application.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStage = 0;
+        const totalStages = 3;
+        const formData = {
+            businessRegistrationNumber: '',
+            gstNumber: '',
+            bankAccountDetails: '',
+            panTaxId: '',
+            businessAddress: '',
+            businessName: '',
+            entityType: '',
+            registrationDate: '',
+            businessEmail: '',
+            businessPhone: '',
+            productExpertise: '',
+            bulkSupplyCapability: '',
+            qualityCertifications: '',
+            complianceDocumentation: '',
+            productSpecifications: '',
+            minimumBatchSize: '',
+            deliveryCapabilities: ''
+        };
+
+        const requiredFields = {
+            0: ['businessRegistrationNumber', 'gstNumber', 'bankAccountDetails', 'panTaxId', 'businessAddress'],
+            1: ['businessName', 'entityType', 'registrationDate', 'businessEmail', 'businessPhone', 'productExpertise', 'bulkSupplyCapability'],
+            2: ['qualityCertifications', 'complianceDocumentation', 'productSpecifications', 'minimumBatchSize', 'deliveryCapabilities']
+        };
+
+        function updateFormData() {
+            const currentForm = document.getElementById(`form-${currentStage}`);
+            const inputs = currentForm.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                formData[input.name] = input.value;
+            });
+        }
+
+        function loadFormData() {
+            const currentForm = document.getElementById(`form-${currentStage}`);
+            const inputs = currentForm.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.value = formData[input.name] || '';
+            });
+        }
+
+        function validateStage() {
+            const currentForm = document.getElementById(`form-${currentStage}`);
+            const inputs = currentForm.querySelectorAll('input, textarea, select');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                const errorSpan = input.nextElementSibling;
+                if (requiredFields[currentStage].includes(input.name)) {
+                    if (!input.value.trim()) {
+                        input.classList.add('error');
+                        errorSpan.textContent = 'This field is required';
+                        errorSpan.classList.add('show');
+                        isValid = false;
+                    } else {
+                        input.classList.remove('error');
+                        errorSpan.classList.remove('show');
+                    }
+                }
+            });
+
+            return isValid;
+        }
+
+        function showStage(stage) {
+            for (let i = 0; i < totalStages; i++) {
+                const form = document.getElementById(`form-${i}`);
+                form.classList.toggle('hidden', i !== stage);
+            }
+            updateStageIndicators();
+        }
+
+        function updateStageIndicators() {
+            for (let i = 0; i < totalStages; i++) {
+                const stageEl = document.getElementById(`stage-${i}`);
+                const circle = stageEl.querySelector('.stage-circle');
+                
+                stageEl.classList.remove('active', 'completed', 'inactive');
+                circle.classList.remove('active', 'completed', 'inactive');
+
+                if (i < currentStage) {
+                    stageEl.classList.add('completed');
+                    circle.classList.add('completed');
+                    circle.textContent = '✓';
+                } else if (i === currentStage) {
+                    stageEl.classList.add('active');
+                    circle.classList.add('active');
+                    circle.textContent = i + 1;
+                } else {
+                    stageEl.classList.add('inactive');
+                    circle.classList.add('inactive');
+                    circle.textContent = i + 1;
+                }
+            }
+        }
+
+        function handleContinue() {
+            if (!validateStage()) {
+                return;
+            }
+
+            updateFormData();
+
+            if (currentStage < totalStages - 1) {
+                currentStage++;
+                showStage(currentStage);
+                loadFormData();
+            } else {
+                console.log('Form Data:', formData);
+                document.getElementById('successMessage').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('successMessage').classList.remove('show');
+                    window.location.href = "index.html";
+                }, 3000);
+            }
+        }
+
+        document.getElementById('continueBtn').addEventListener('click', handleContinue);
+
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (input.classList.contains('error')) {
+                    input.classList.remove('error');
+                    input.nextElementSibling.classList.remove('show');
+                }
+            });
+        });
+
+        updateStageIndicators();
+    </script>
+</body>
+</html>
