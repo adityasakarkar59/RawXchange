@@ -1,0 +1,58 @@
+# Operating system files
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Visual Studio Code settings
+
+.vscode/
+
+# IntelliJ IDEA settings
+
+.idea/
+
+# Node.js dependencies
+
+node_modules/
+
+# Environment variables and secret configuration
+
+.env
+.env.local
+.env.development
+.env.production
+
+# Log files
+
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build and deployment folders
+
+dist/
+build/
+.cache/
+
+# Temporary files
+
+*.tmp
+*.temp
+*.swp
+*~
+
+# Netlify local development folder
+
+.netlify/
+
+# Firebase local files
+
+.firebase/
+firebase-debug.log
+
+# Sensitive configuration files
+
+config.js
+secrets.js
