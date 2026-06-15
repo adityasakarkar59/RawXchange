@@ -15,7 +15,7 @@ https://rawxchangee.netlify.app/
 Add your GitHub repository link here:
 
 ```text
-https://github.com/your-username/rawxchange
+(https://github.com/adityasakarkar59/RawXchange.git)
 ```
 
 ## Features
@@ -95,7 +95,7 @@ Download or clone the project and open `index.html` in a web browser.
 ## Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/rawxchange.git
+git clone https://github.com/adityasakarkar59/RawXchange.git
 ```
 
 Move into the project folder:
@@ -114,13 +114,8 @@ code .
 
 RawXchange uses FormSubmit to receive form submissions without requiring a custom backend server.
 
-Before publishing the project, update the form action with the correct receiving email address:
 
-```html
-<form action="https://formsubmit.co/your-email@example.com" method="POST">
-```
 
-For security, avoid displaying your personal email address publicly when possible.
 
 ## Future Improvements
 
